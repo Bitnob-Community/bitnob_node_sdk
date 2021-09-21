@@ -49,11 +49,11 @@ class Customer extends Base {
     /**
     * @function getCustomer
     * @description Get Customer.
-    * @param {string} customer_id - ID of customer.
+    * @param {string} customerId - ID of customer.
     * @return {JSON} saved data of customer.
     */
-    async getCustomer(customer_id:string) {
-        const url = '/customers/' + customer_id;
+    async getCustomer(customerId:string) {
+        const url = '/customers/' + customerId;
         const method = 'get';
         try {
             const response = await this.sendRequest(url, method)
@@ -64,13 +64,31 @@ class Customer extends Base {
     }
 
     /**
+    * @function getCustomerByEmail
+    * @description Get Customer.
+    * @param {string} customer_id - ID of customer.
+    * @return {JSON} saved data of customer.
+    */
+     async getCustomerByEmail(email:string) {
+        const data = {email: email}
+        const url = "/customers/fetch_customer"
+        const method = 'post';
+        try {
+            const response = await this.sendRequest(url, method, data)
+            return response
+        } catch (error) {
+            throw error
+        }
+    }
+
+    /**
     * @function updateCustomer
     * @description Update a customer.
-    * @param {JSON} data - data of customer.
+    * @param {JSON} data, customerId - data of customer, id of customer.
     * @return {JSON} updated data of customer.
     */
-    async updateCustomer(customer_id:string, data:any) {
-        const url = '/customers/' + customer_id;
+    async updateCustomer(customerId:string, data:any) {
+        const url = '/customers/' + customerId;
         const method = 'put';
         try {
             const response = await this.sendRequest(url, method, data)
