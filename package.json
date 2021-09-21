@@ -1,15 +1,33 @@
 {
-  "name": "bitnob",
+  "name": "bitnob_node_sdk",
   "version": "1.0.0",
-  "description": "NPM package for integrating with Bitnob API",
-  "main": "index.js",
+  "description": "Node JS Package For the Bitnob API",
+  "main": "bitnob/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitnob/bitnob_node_sdk.git"
+  },
+  "keywords": [
+    "API",
+    "Bitcoin",
+    "Crypto"
+  ],
   "author": "Bitnob",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bitnob/bitnob_node_sdk/issues"
+  },
+  "homepage": "https://github.com/bitnob/bitnob_node_sdk#readme",
   "dependencies": {
     "axios": "^0.21.4",
     "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/dotenv": "^8.2.0"
   }
 }
