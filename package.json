@@ -1,10 +1,10 @@
 {
-  "name": "bitnob_node_sdk",
+  "name": "bitnob",
   "version": "1.0.0",
   "description": "Node JS Package For the Bitnob API",
   "main": "bitnob/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"no test specified\"",
     "build": "tsc"
   },
   "repository": {
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/dotenv": "^8.2.0"
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^16.9.4"
   }
 }
