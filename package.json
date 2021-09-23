@@ -1,6 +1,6 @@
 {
   "name": "bitnob",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Node JS Package For the Bitnob API",
   "main": "bitnob/index.js",
   "scripts": {

@@ -1,7 +1,8 @@
 import axios from "axios";
 import dotenv from 'dotenv';
+import crypto from 'crypto';
 
-import { BitnobBadKeyError, errorClass } from './exceptions';
+import { BitnobBadKeyError, errorClass, BitnobRequiredParamError } from './exceptions';
 
 dotenv.config();
 
@@ -49,20 +50,18 @@ class Base {
       
     };
 
-//   checkParameter(requiredParam:string[], passedParam:string[]){
-//     const requredParam = requiredParam.sort();
-//     const passdParam = Object.keys(passedParam).sort();
-    
-//     for (var i = 0; i < requredParam.length; ++i) {
-//         if (requredParam[i] !== passedParam[i]) {
-//           throw IncompleterErr(`${requredParam} is missing`);
-//           return;
-//         }
-//       }
-    
-//     return true;
-//     }
-  }
+    checkParameter(requiredParam:string[], passedParam:any){
+      const sortRequiredParam = requiredParam.sort();
+      const sortPassedParam = Object.keys(passedParam).sort();
+      sortRequiredParam.filter((item) => {
+        if (!sortPassedParam.includes(item)) {
+          const message = "The following are required: " + sortRequiredParam.toString()
+          const newMessage = `${item} is not required!. ` + message
+          throw new BitnobRequiredParamError(newMessage)
+        }
+      })
+    }
+}
 
 const dynamicParam = ({ ...args }) => {
   const obj = args;
@@ -76,4 +75,17 @@ const dynamicParam = ({ ...args }) => {
   }
 };
 
-export {Base, dynamicParam}
+async function webhookAuthentication(request:any) {
+  const webhookSecret:any = process.env.BITNOB_WEBHOOK_SECRET;
+
+  const bitnobSignature = request.headers['x-bitnob-signature'];
+  const hashedSignature = crypto.createHmac('sha512', webhookSecret)
+  .update(JSON.stringify(request.body))
+  .digest('hex');
+
+  return hashedSignature === bitnobSignature;
+} 
+
+
+
+export {Base, dynamicParam, webhookAuthentication}

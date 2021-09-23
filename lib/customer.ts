@@ -15,6 +15,9 @@ class Customer extends Base {
     * @return {JSON} saved data of customer.
     */
     async createCustomer(data:any) {
+        const requiredData = ["email", "firstName", "lastName", "phone", "countryCode"]
+        this.checkParameter(requiredData, data)
+
         const url = '/customers';
         const method = 'post';
         try {

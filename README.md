@@ -121,6 +121,23 @@ const customer = new Customer()
         - listTransactions
         - getTransaction
 
+### Webhook Authentication
+- The Bitnob SDK comes with a function that enables your business authenticate events sent to your webhook. It is advised to authenticate all requests sent to your endpoint to avoid fake transactions. 
+
+#### Usage
+```javascript
+    import { webhookAuthentication } from 'bitnob';
+
+    // Using Express
+    app.post("/webhook_url", function(req, res) {
+        if (webhookAuthentication(req)){
+            const event = req.body;
+            // Do something with event  
+            res.send(200);
+        };
+    };
+```
+
 ## Development 
 
 
