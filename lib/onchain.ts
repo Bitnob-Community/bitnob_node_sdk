@@ -16,6 +16,8 @@ class Onchain extends Base {
      * @returns
     */
     async sendBitcoin(data:any) {
+        const requiredData = ["satoshis", "address", "customerEmail"]
+        this.checkParameter(requiredData, data)
         const url = '/wallets/send_bitcoin';
         const method = 'post';
         try {
@@ -37,6 +39,8 @@ class Onchain extends Base {
      * @returns {JSON}
      */
     async generateAddress(data:any) {
+        const requiredData = ["label", "customerEmail"]
+        this.checkParameter(requiredData, data)
         const url = '/addresses/generate';
         const method = 'post';
         try {

@@ -19,6 +19,8 @@ class Lightning extends Base {
     * @return {JSON} lightning invoice for customer.
     */
     async createInvoice(data:any) {
+        const requiredData = ["description", "tokens", "customerEmail"]
+        this.checkParameter(requiredData, data)
         const url = '/wallets/ln/createinvoice';
         const method = 'post';
         try {
@@ -42,6 +44,8 @@ class Lightning extends Base {
     * @return {JSON} lightning invoice for customer.
     */
     async payInvoice(data:any) {
+        const requiredData = ["request", "reference"]
+        this.checkParameter(requiredData, data)
         const url = '/wallets/ln/pay';
         const method = 'post';
         try {

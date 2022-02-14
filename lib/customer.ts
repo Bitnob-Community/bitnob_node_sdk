@@ -30,7 +30,7 @@ class Customer extends Base {
 
     /**
     * @function listCustomers
-    * @description Create a customer.
+    * @description Get list of customers.
     * @param {JSON} params can be empty or any of the following:
     * order = (optional) Result order. Accepted values: `DESC` (default), ASC
     * page = (optional) Result page.
@@ -68,8 +68,8 @@ class Customer extends Base {
 
     /**
     * @function getCustomerByEmail
-    * @description Get Customer.
-    * @param {string} customer_id - ID of customer.
+    * @description Get Customer by email.
+    * @param {string} email - email of customer.
     * @return {JSON} saved data of customer.
     */
      async getCustomerByEmail(email:string) {
@@ -87,7 +87,7 @@ class Customer extends Base {
     /**
     * @function updateCustomer
     * @description Update a customer.
-    * @param {JSON} data, customerId - data of customer, id of customer.
+    * @param {JSON} data, customerId - updated data of customer, id of customer.
     * @return {JSON} updated data of customer.
     */
     async updateCustomer(customerId:string, data:any) {
