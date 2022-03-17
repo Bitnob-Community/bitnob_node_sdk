@@ -270,7 +270,6 @@ async payLnAddress(data:any) {
     * @param {string} data
     * @return {JSON} Update lnurl
     */
-
           async updateUrl(customerId:string, data:any) {
             const requiredData = ["id"]
             this.checkParameter(requiredData, data)
@@ -283,4 +282,4 @@ async payLnAddress(data:any) {
                 throw error   
             }
         }
-}
+    }
