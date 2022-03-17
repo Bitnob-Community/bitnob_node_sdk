@@ -1,6 +1,41 @@
 import { Base, dynamicParam } from './base';
+import {WalletAddress, Transaction} from './model';
 
 class Onchain extends Base {
+
+    private generateAddressObject(data:any){
+        const wallet = new WalletAddress(
+            data.address,
+            data.addressType,
+            data.label
+        );
+        return wallet
+    }
+
+    private generateTransactionObject(data:any){
+        const trans = new Transaction(
+           data.id, 
+           data.reference, 
+           data.amount, 
+           data.fees, 
+           data.btcFees, 
+           data.satFees, 
+           data.sat_amount, 
+           data.spotPrice, 
+           data.action,
+           data.type, 
+           data.status, 
+           data.channel, 
+           data.payment_request, 
+           data.description, 
+           data.address, 
+           data.hash,
+           data.confirmations, 
+           data.invoiceId
+
+        )
+        return trans
+    }
     /**
      * @function sendBitcoin
      * @description Send Bitcoin,
@@ -22,7 +57,8 @@ class Onchain extends Base {
         const method = 'post';
         try {
             const response = await this.sendRequest(url, method, data)
-            return response
+            const trans = this.generateTransactionObject(response.data)
+            return trans
         } catch (error) {
             throw error   
         }
@@ -30,7 +66,7 @@ class Onchain extends Base {
 
     /**
      * @function generateAddress
-     * @description Generates Address for customer,
+     * @description Generates BTC Address for customer,
      * @param  {JSON} data
      * data ={
             label: "purchase xbox",
@@ -45,7 +81,8 @@ class Onchain extends Base {
         const method = 'post';
         try {
             const response = await this.sendRequest(url, method, data)
-            return response
+            const address = this.generateAddressObject(response.data)
+            return address
         } catch (error) {
             throw error   
         }
@@ -59,6 +96,24 @@ class Onchain extends Base {
     async listAddresses(params = {}) {
         const fixedParams = dynamicParam(params);
         const url = '/addresses/?' + fixedParams;
+        const method = 'get';
+        try {
+            const response = await this.sendRequest(url, method)
+            const data:any[] = response.data.address
+            const addressObjects = data.map((item  => this.generateAddressObject(item)))
+            return addressObjects
+        } catch (error) {
+            throw error
+        }
+    }
+
+    /**
+     * @function getRecommendedBtcFees
+     * @description Gets Recommended Fees for BTC Onchain Transaction,
+     * @returns {[JSON]}
+     */
+     async getRecommendedBtcFees(params = {}) {
+        const url = '/recommended-fees/btc';
         const method = 'get';
         try {
             const response = await this.sendRequest(url, method)

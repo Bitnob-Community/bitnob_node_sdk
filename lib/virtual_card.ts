@@ -2,7 +2,7 @@ import { Base, dynamicParam } from './base';
 
 class VirtualCard extends Base {
 
-        /**
+    /**
     * @function registerCardUser
     * @description Regsiter Card User.
     * @param {JSON} data
@@ -19,9 +19,9 @@ class VirtualCard extends Base {
             line1: "2349021534385"
             amount: 1000
         }
-    * @return {JSON} saved card data of customer.
+    * @return {JSON}.
     */
-    async registerCardUser(data:any) {
+    async registerCardUser(data: any) {
         const requiredData = ["customerEmail", "idNumber", "idNumber", "firstName", "lastName", "city", "state", "country", "zipCode", "line1"]
         this.checkParameter(requiredData, data)
 
@@ -30,7 +30,7 @@ class VirtualCard extends Base {
         try {
             const response = await this.sendRequest(url, method, data)
             return response
-        } catch (error:any) {
+        } catch (error: any) {
             throw error
         }
     }
@@ -44,7 +44,7 @@ class VirtualCard extends Base {
         }
     * @return {JSON} card details.
     */
-    async createCard(email:string) {
+    async createCard(email: string) {
 
         const data = {
             email: "customer@gmail.com"
@@ -55,7 +55,7 @@ class VirtualCard extends Base {
         try {
             const response = await this.sendRequest(url, method, data)
             return response
-        } catch (error:any) {
+        } catch (error: any) {
             throw error
         }
     }
@@ -66,12 +66,12 @@ class VirtualCard extends Base {
     * @param {JSON} data
     * data = {
             customerEmail: "customer@gmail.com",
-            cardId: "gauddksdop0aooaoa09886q",
+            cardId: "d1cbc518-95d6-4bf2-a0f4-e6a33ee09603",
             amount: 1000
         }
-    * @return {JSON} saved data of customer.
+    * @return {JSON} card transaction details.
     */
-    async topUp(data:any) {
+    async topUp(data: any) {
         const requiredData = ["customerEmail", "cardId", "amount"]
         this.checkParameter(requiredData, data)
 
@@ -80,23 +80,23 @@ class VirtualCard extends Base {
         try {
             const response = await this.sendRequest(url, method, data)
             return response
-        } catch (error:any) {
+        } catch (error: any) {
             throw error
         }
     }
 
     /**
     * @function withdraw
-    * @description Top Up Card.
+    * @description Withdraw Card.
     * @param {JSON} data
     * data = {
             customerEmail: "customer@gmail.com",
-            cardId: "gauddksdop0aooaoa09886q",
+            cardId: "d1cbc518-95d6-4bf2-a0f4-e6a33ee09603",
             amount: 1000
         }
-    * @return {JSON} saved data of customer.
+    * @return {JSON} card transaction details.
     */
-    async withdraw(data:any) {
+    async withdraw(data: any) {
         const requiredData = ["customerEmail", "cardId", "amount"]
         this.checkParameter(requiredData, data)
 
@@ -105,7 +105,32 @@ class VirtualCard extends Base {
         try {
             const response = await this.sendRequest(url, method, data)
             return response
-        } catch (error:any) {
+        } catch (error: any) {
+            throw error
+        }
+    }
+
+    /**
+    * @function mockTransaction
+    * @description Mock Card Transaction on Sandbox.
+    * @param {JSON} data
+    *  data = {
+            cardId: "d1cbc518-95d6-4bf2-a0f4-e6a33ee09603",
+            amount: 1000,
+            type: deduct
+        }
+    * @return {JSON}.
+    */
+    async mockTransaction(data: any) {
+        const requiredData = ["customerEmail", "cardId", "amount"]
+        this.checkParameter(requiredData, data)
+
+        const url = '/virtualcards/debit';
+        const method = 'post';
+        try {
+            const response = await this.sendRequest(url, method, data)
+            return response
+        } catch (error: any) {
             throw error
         }
     }
@@ -113,14 +138,14 @@ class VirtualCard extends Base {
     /**
     * @function freezeCard
     * @description freeze a card
-    * @param {JSON} data
-    * cardId: "gauddksdop0aooaoa09886qf"
-    * @return {JSON} freeze card details.
+    * @param {string} cardId
+    * cardId: "d1cbc518-95d6-4bf2-a0f4-e6a33ee09603"
+    * @return {JSON} freezed card details.
     */
-    async freezeCard(cardId:string) {
+    async freezeCard(cardId: string) {
 
         const data = {
-            cardId: "gauddksdop0aooaoa09886q",
+            cardId: cardId,
         }
 
         const url = '/virtualcards/freeze';
@@ -128,7 +153,7 @@ class VirtualCard extends Base {
         try {
             const response = await this.sendRequest(url, method, data)
             return response
-        } catch (error:any) {
+        } catch (error: any) {
             throw error
         }
     }
@@ -136,25 +161,94 @@ class VirtualCard extends Base {
     /**
     * @function unfreezeCard
     * @description freeze a card
-    * @param {JSON} data
-    * cardId: "gauddksdop0aooaoa09886q",
-    * @return {JSON} unfreeze card details.
+    * @param {string} cardId
+    * cardId: "d1cbc518-95d6-4bf2-a0f4-e6a33ee09603"
+    * @return {JSON} unfreezed card details.
     */
-        async unfreezeCard(cardId:string) {
+    async unfreezeCard(cardId: string) {
 
-            const data = {
-                cardId: "gauddksdop0aooaoa09886q",
-            }
-    
-            const url = '/virtualcards/unfreeze';
-            const method = 'post';
-            try {
-                const response = await this.sendRequest(url, method, data)
-                return response
-            } catch (error:any) {
-                throw error
-            }
+        const data = {
+            cardId: cardId,
         }
+
+        const url = '/virtualcards/unfreeze';
+        const method = 'post';
+        try {
+            const response = await this.sendRequest(url, method, data)
+            return response
+        } catch (error: any) {
+            throw error
+        }
+    }
+
+    /**
+    * @function blockCard
+    * @description block card
+    * @param {string} cardId
+    * cardId: "d1cbc518-95d6-4bf2-a0f4-e6a33ee09603"
+    * @return {JSON} blocked card details.
+    */
+    async blockCard(cardId: string) {
+
+        const data = {
+            cardId: cardId,
+        }
+
+        const url = '/virtualcards/block';
+        const method = 'post';
+        try {
+            const response = await this.sendRequest(url, method, data)
+            return response
+        } catch (error: any) {
+            throw error
+        }
+    }
+
+    /**
+    * @function unblockCard
+    * @description unblock a card
+    * @param {string} cardId
+    * cardId: "d1cbc518-95d6-4bf2-a0f4-e6a33ee09603"
+    * @return {JSON} unblocked card details.
+    */
+    async unblockCard(cardId: string) {
+
+        const data = {
+            cardId: cardId,
+        }
+
+        const url = '/virtualcards/unblock';
+        const method = 'post';
+        try {
+            const response = await this.sendRequest(url, method, data)
+            return response
+        } catch (error: any) {
+            throw error
+        }
+    }
+
+    /**
+    * @function terminateCard
+    * @description terminate a card
+    * @param {string} cardId
+    * cardId: "d1cbc518-95d6-4bf2-a0f4-e6a33ee09603"
+    * @return {JSON}.
+    */
+    async terminateCard(cardId: string) {
+
+        const data = {
+            cardId: cardId,
+        }
+
+        const url = '/virtualcards/terminate';
+        const method = 'post';
+        try {
+            const response = await this.sendRequest(url, method, data)
+            return response
+        } catch (error: any) {
+            throw error
+        }
+    }
 
     /**
     * @function listCardUsers
@@ -172,7 +266,7 @@ class VirtualCard extends Base {
         try {
             const response = await this.sendRequest(url, method)
             return response
-        } catch (error:any) {
+        } catch (error: any) {
             throw error
         }
     }
@@ -186,67 +280,68 @@ class VirtualCard extends Base {
     * take = (optional) Number of results per request. Accepted values: 0 - 100. Default 10
     * @return {[JSON]}.
     */
-     async listCardTransactions(cardId:string, params = {}) {
+    async listCardTransactions(cardId: string, params = {}) {
         const fixedParams = dynamicParam(params);
         const url = `/virtualcards/cards/${cardId}/transactions` + fixedParams;
         const method = 'get';
         try {
             const response = await this.sendRequest(url, method)
             return response
-        } catch (error:any) {
+        } catch (error: any) {
             throw error
         }
     }
 
     /**
     * @function listTransactions
-    * @description Create a customer.
+    * @description list transactions.
     * @param {JSON} params can be empty or any of the following:
     * order = (optional) Result order. Accepted values: `DESC` (default), ASC
     * page = (optional) Result page.
     * take = (optional) Number of results per request. Accepted values: 0 - 100. Default 10
     * @return {[JSON]}.
     */
-        async listTransactions(params = {}) {
+    async listTransactions(params = {}) {
         const fixedParams = dynamicParam(params);
         const url = '/virtualcards/transactions/?' + fixedParams;
         const method = 'get';
         try {
             const response = await this.sendRequest(url, method)
             return response
-        } catch (error:any) {
+        } catch (error: any) {
             throw error
         }
     }
 
     /**
     * @function listCards
-    * @description Create a customer.
+    * @description list cards
     * @param {JSON} params can be empty or any of the following:
     * order = (optional) Result order. Accepted values: `DESC` (default), ASC
     * page = (optional) Result page.
     * take = (optional) Number of results per request. Accepted values: 0 - 100. Default 10
     * @return {[JSON]}.
     */
-     async listCards(params = {}) {
+    async listCards(params = {}) {
         const fixedParams = dynamicParam(params);
         const url = '/virtualcards/cards/?' + fixedParams;
         const method = 'get';
         try {
             const response = await this.sendRequest(url, method)
             return response
-        } catch (error:any) {
+        } catch (error: any) {
             throw error
         }
     }
 
     /**
     * @function fetchCard
-    * @description Fetch Customer.
-    * @param {string} cardId - ID of card.
-    * @return {JSON} saved data of customer.
+    * @description Fetch Card.
+    * @param {string} cardId
+    * cardId: "d1cbc518-95d6-4bf2-a0f4-e6a33ee09603"
+    * @return {JSON} saved data of card.
     */
-    async fetchCard(cardId:string) {
+    async fetchCard(cardId: string) {
         const url = '/virtualcards/card/' + cardId;
         const method = 'get';
         try {

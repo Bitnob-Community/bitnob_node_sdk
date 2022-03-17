@@ -1,6 +1,20 @@
 import { Base, dynamicParam } from './base';
+import { User } from './model';
 
 class Customer extends Base {
+
+    private generateUserObject(data:any) {
+        const user = new User(
+            data.id,
+            data.email, 
+            data.firstName,  
+            data.lastName, 
+            data.countryCode, 
+            data.phone,
+        );
+        return user
+    }
+
     /**
     * @function createCustomer
     * @description Create a customer.
@@ -22,7 +36,8 @@ class Customer extends Base {
         const method = 'post';
         try {
             const response = await this.sendRequest(url, method, data)
-            return response
+            const user = this.generateUserObject(response)
+            return user
         } catch (error:any) {
             throw error
         }
@@ -42,8 +57,12 @@ class Customer extends Base {
         const url = '/customers/?' + fixedParams;
         const method = 'get';
         try {
-            const response = await this.sendRequest(url, method)
-            return response
+            const response = await this.sendRequest(url, method);
+
+            const customers:any[] = response.data.customers
+            const customersObject = customers.map((item  => this.generateUserObject(item)))
+            return customersObject
+
         } catch (error:any) {
             throw error
         }
@@ -60,7 +79,8 @@ class Customer extends Base {
         const method = 'get';
         try {
             const response = await this.sendRequest(url, method)
-            return response
+            const user = this.generateUserObject(response)
+            return user
         } catch (error) {
             throw error
         }
@@ -78,7 +98,8 @@ class Customer extends Base {
         const method = 'post';
         try {
             const response = await this.sendRequest(url, method, data)
-            return response
+            const user = this.generateUserObject(response)
+            return user
         } catch (error) {
             throw error
         }
@@ -95,6 +116,7 @@ class Customer extends Base {
         const method = 'put';
         try {
             const response = await this.sendRequest(url, method, data)
+            const user = this.generateUserObject(response)
             return response
         } catch (error) {
             throw error

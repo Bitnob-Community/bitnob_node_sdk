@@ -3,7 +3,7 @@ import { Base, dynamicParam } from './base';
 class USDC extends Base {
     /**
     * @function createUsdcAddress
-    * @description Create address.
+    * @description Create USDC address.
     * @param {JSON} data
     * data = {
             customerEmail: "customer@gmail.com",

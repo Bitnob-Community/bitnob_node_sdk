@@ -1,6 +1,44 @@
 import { Base, dynamicParam } from './base';
+import {Checkout, CheckoutStatus} from './model';
 
 class HostedCheckout extends Base {
+    private generateCheckoutObject(data:any) {
+        const checkout = new Checkout(
+            data.id,
+            data.reference,
+            data.amount,
+            data.satAmountPaid,
+            data.lightningExpiresAt,
+            data.expiresAt,
+            data.satAmount,
+            data.callbackUrl,
+            data.type,
+            data.status,
+            data.successUrl,
+            data.description,
+            data.address,
+            data.lightning,
+            data.btcAmount,
+        );
+        if (data.customer) {
+            checkout.customer = data.customer;
+            checkout.companyName = data.companyName;
+            checkout.companyLogo = data.companyLogo;
+        }
+        return checkout
+    }
+
+    private generateCheckoutStatusObject(data:any) {
+        const checkoutStatus = new CheckoutStatus(
+            data.id,
+            data.satAmountPaid,
+            data.SatAmount,
+            data.status
+        );
+
+        return checkoutStatus
+    }
+
     /**
     * @function createCheckout
     * @description Create a checkout.
@@ -10,8 +48,8 @@ class HostedCheckout extends Base {
             description: "description"
             customerEmail: "customer@gmail.com",
             notificationEmail: "CustomerfirstName",
-            callbackUrl: "CustomerlastName",
-            successUrl: "9xxxxxxxx",
+            callbackUrl: "htpps://domain.com/callBack",
+            successUrl: "htpps://domain.com/successUrl",
             reference: "reference"
         }
     * @return {JSON} created checkout.
@@ -24,7 +62,8 @@ class HostedCheckout extends Base {
         const method = 'post';
         try {
             const response = await this.sendRequest(url, method, data)
-            return response
+            const checkout = this.generateCheckoutObject(response)
+            return checkout
         } catch (error:any) {
             throw error
         }
@@ -45,7 +84,9 @@ class HostedCheckout extends Base {
         const method = 'get';
         try {
             const response = await this.sendRequest(url, method)
-            return response
+            const data:any[] = response.data
+            const checkoutObjects = data.map((item  => this.generateCheckoutObject(item)))
+            return checkoutObjects
         } catch (error:any) {
             throw error
         }
@@ -62,7 +103,8 @@ class HostedCheckout extends Base {
         const method = 'get';
         try {
             const response = await this.sendRequest(url, method)
-            return response
+            const checkout = this.generateCheckoutStatusObject(response)
+            return checkout
         } catch (error) {
             throw error
         }
@@ -79,7 +121,8 @@ class HostedCheckout extends Base {
         const method = 'get';
         try {
             const response = await this.sendRequest(url, method)
-            return response
+            const checkout = this.generateCheckoutObject(response)
+            return checkout
         } catch (error) {
             throw error
         }

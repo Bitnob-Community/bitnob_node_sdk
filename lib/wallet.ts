@@ -54,6 +54,46 @@ class Wallet extends Base {
             throw error
         }
     }
+
+    /**
+    * @function swapBtcToUsd
+    * @description Swap Btc to Usd.
+    * @param {number} amount - BTC amount to be swapped for USD.
+    * @return {JSON}.
+    */
+         async swapBtcToUsd(amount:number) {
+            const data = {
+                "amount" : amount
+            }
+            const url = '/wallets/swap-bitcoin-usd';
+            const method = 'post';
+            try {
+                const response = await this.sendRequest(url, method, data)
+                return response
+            } catch (error:any) {
+                throw error
+            }
+        }
+    
+        /**
+         * @function swapUsdToBtc
+         * @description Swap Usd to Btc,
+         * @param {number} amount - USD amount to be swapped for BTC.
+         * @returns
+        */
+        async swapUsdToBtc(amount:number) {
+            const data = {
+                "amount" : amount
+            }
+            const url = '/wallets/swap-usd-bitcoin';
+            const method = 'post';
+            try {
+                const response = await this.sendRequest(url, method, data)
+                return response
+            } catch (error) {
+                throw error   
+            }
+        }
 }
 
 export default Wallet;

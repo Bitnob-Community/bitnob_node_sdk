@@ -5,7 +5,6 @@ import Wallet from "./wallet";
 import VirtualCard from "./virtual_card";
 import HostedCheckout from "./hosted_checkout";
 import USDC from "./usdc";
-import Swap from "./swap";
 import { webhookAuthentication } from './base';
 
 export {
@@ -16,6 +15,5 @@ export {
     VirtualCard,
     HostedCheckout,
     USDC,
-    Swap,
     webhookAuthentication,
 };

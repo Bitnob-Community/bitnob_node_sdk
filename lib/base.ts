@@ -16,15 +16,18 @@ class Base {
     constructor() {
       this.apiKey = process.env.BITNOB_API_KEY;
       this.production = process.env.BITNOB_PRODUCTION;
+      this.baseUrl = process.env.BITNOB_BASE_URL;
       this.BitnobLiveURL = 'https://api.bitnob.co/api/v1'
       this.BitnobSandboxURL = 'https://sandboxapi.bitnob.co/api/v1'
       if(!this.apiKey) {
         throw new BitnobBadKeyError();
       }
-      if(this.production || this.production === ""){
-        this.baseUrl = this.BitnobLiveURL;
-      } else {
-        this.baseUrl = this.BitnobSandboxURL;
+      if (this.baseUrl === ""){
+        if(this.production || this.production === ""){
+          this.baseUrl = this.BitnobLiveURL;
+        } else {
+          this.baseUrl = this.BitnobSandboxURL;
+        }
       }
     }
 

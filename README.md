@@ -26,9 +26,9 @@ To run on sandbox(development mode), set `BITNOB_PRODUCTION=false` as an environ
 Before making use of any bitnob functions, it should be instantiated. Below is a demonstration:
 
 ```javascript
-import { Lightning, Customer } from bitnob
-const ln = new Lightning()
-const customer = new Customer()
+import { Lightning, Customer } from bitnob;
+const ln = new Lightning();
+const customer = new Customer();
 ```
 
 - `Onchain()`
