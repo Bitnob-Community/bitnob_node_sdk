@@ -12,7 +12,7 @@ class USDC extends Base {
     * @return {JSON} usdc address for customer.
     */
     async createUsdcAddress(data:any) {
-        const requiredData = ["customerEmail", "labdl"]
+        const requiredData = ["customerEmail", "label"]
         this.checkParameter(requiredData, data)
 
         const url = '/addresses/generate/usdc';
